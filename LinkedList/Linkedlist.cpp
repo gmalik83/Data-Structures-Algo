@@ -189,6 +189,32 @@ ListNode* FindBeginofLoop(ListNode*head)
     }
     return NULL;
 }
+// Find Length of loop in Linked List
+int FindLengthofLoop(ListNode*head)
+{
+    ListNode* slowPtr = head ,*fastPtr = head;
+    int loopExists = 0 ,counter = 0;
+    while(slowPtr&&fastPtr&&fastPtr->next)
+    {
+        slowPtr = slowPtr->next;
+        fastPtr = fastPtr->next->next;
+        if(slowPtr==fastPtr)
+        {
+            loopExists =1;
+            break;
+
+        }
+    }
+    if(loopExists){
+        fastPtr = fastPtr->next;
+        while(slowPtr!=fastPtr){
+            fastPtr = fastPtr->next;
+            counter++;
+        }
+        return counter;
+    }
+    return 0 ; // No Loop Exists
+}
 int main()
 {
     ListNode* head = NULL;
