@@ -159,7 +159,36 @@ int FloydCycleLinkedList(ListNode*head)
     }
     return 0; // Does not Contain a Cycle
 }
+// Find Begin of Loop in LL
+ListNode* FindBeginofLoop(ListNode*head)
+{
+    ListNode*slowPtr = head , *fastPtr = head;
+    int loopExists = 0;
+    while(slowPtr&&fastPtr&&fastPtr->next)
+    {
+        slowPtr = slowPtr->next;
+        fastPtr = fastPtr->next->next;
+        if(slowPtr==fastPtr)
+        {
+            loopExists = 1;
+            break;
 
+        }
+
+    }
+    if(loopExists)
+    {
+        slowPtr = head;
+        while(slowPtr!=fastPtr){
+            fastPtr = fastPtr->next;
+            slowPtr = slowPtr->next;
+
+        }
+        return slowPtr;
+
+    }
+    return NULL;
+}
 int main()
 {
     ListNode* head = NULL;
