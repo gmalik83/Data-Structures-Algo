@@ -145,6 +145,20 @@ int ListLength(ListNode*head)
     return count;
     // TC - O(n)
 }
+//Floyd Cycle Detection in loop
+int FloydCycleLinkedList(ListNode*head)
+{
+    ListNode*slowPtr=head,*fastPtr = head;
+    while(slowPtr&&fastPtr&&fastPtr->next)
+    {
+        slowPtr = slowPtr->next;
+        fastPtr = fastPtr->next->next;
+        if(slowPtr==fastPtr)
+            return 1; // LL contain a Cycle
+
+    }
+    return 0; // Does not Contain a Cycle
+}
 
 int main()
 {
@@ -155,6 +169,10 @@ int main()
     insertSingle(&head,4);
     insertSingle(&head,5);
     cout<<ListLength(head);
+    if(FloydCycleLinkedList(head))
+    cout<<"Linked List Contain a Cycle\n";
+    else 
+        cout<<"Linked List Does not contain a Cycle\n";
     
 
     return 0;
