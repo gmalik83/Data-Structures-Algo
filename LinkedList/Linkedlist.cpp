@@ -5,7 +5,7 @@ using namespace std;
 typedef struct ListNode{
     int data ;
     ListNode* next;
-};
+}ListNode;
 /*
     Three Case of LL insertion
     1. Beginning 
@@ -49,21 +49,89 @@ ListNode* insert(ListNode*head,int data,int position)
         return head;
 }
 // Insert Single Node in Linked List
-ListNode* insertSingle(ListNode*head,int data)
+void insertSingle(ListNode** head_ref, int new_data)
 {
-    ListNode* newNode = head,*p=head;
-    if(newNode==NULL)
+    /* 1. allocate node */
+    ListNode* new_node = (ListNode*) malloc(sizeof(ListNode));
+ 
+    ListNode *last = *head_ref;  /* used in step 5*/
+ 
+    /* 2. put in the data  */
+    new_node->data  = new_data;
+ 
+    /* 3. This new node is going to be the last node, so make next of
+          it as NULL*/
+    new_node->next = NULL;
+ 
+    /* 4. If the Linked List is empty, then make the new node as head */
+    if (*head_ref == NULL)
     {
-        newNode = (ListNode*)malloc(sizeof(ListNode));
-        newNode->data = data;
-        newNode->next = NULL;
-        return newNode;
+       *head_ref = new_node;
+       return;
     }
-    newNode = (ListNode*)malloc(sizeof(ListNode));
-    newNode->data = data;
-    while()
+ 
+    /* 5. Else traverse till the last node */
+    while (last->next != NULL)
+        last = last->next;
+ 
+    /* 6. Change the next of last node */
+    last->next = new_node;
+    return;
+}
+ 
+//Delete Node From Linked List
+/*
+    1. Delete Head Node
+    2. Delete Tail Node
+    3. Delete Intermediate Node in LL*/
+void DeleteNode(ListNode**head,int position)
+{
+    int k =1;
+    ListNode*p,*q;
+    if(*head==NULL)
+    {
+        cout<<"List Empty"<<endl;
+        return;
+    }
+    p = *head;
+    // Head Node
+    if(position == 1)
+    {
+        *head = (*head)->next;
+        free(p);
+        return ;
+    }
+    else {
+        while((p!=NULL)&&(k<position))
+        {
+            k++;
+            q = p;
+            p = p->next;
+
+        }
+        if(p==NULL)
+            cout<<"Position Does not exist\n";
+            else {
+                q->next = p->next;
+                free(p);
+
+            }
+    }
 
 }
+// Delete Singly Linked List
+void DeleteLinkedList(ListNode**head){
+    ListNode* tempNode , *secNode;
+    secNode = *head;
+    while(secNode){
+        tempNode = secNode->next;
+        free(secNode);
+        secNode = tempNode;
+    }
+    *head = NULL;
+}
+
+
 // Find Lenght of Linked List and print it
 int ListLength(ListNode*head)
 {
@@ -80,7 +148,13 @@ int ListLength(ListNode*head)
 
 int main()
 {
-    ListNode* head ;
+    ListNode* head = NULL;
+    insertSingle(&head,1);
+    insertSingle(&head,2);
+    insertSingle(&head,3);
+    insertSingle(&head,4);
+    insertSingle(&head,5);
+    cout<<ListLength(head);
     
 
     return 0;
