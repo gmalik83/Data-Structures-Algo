@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-// Reverse Array Function
+// Reverse array Function
 void reverseArray(int a[],int start,int end)
 {
     int temp;
