@@ -17,6 +17,7 @@ public:
     }
     void print_adj()
     {
+        cout << endl;
         for (auto n : adjList)
         {
             cout << n.first << ":";
@@ -27,6 +28,27 @@ public:
             cout << endl;
         }
     }
+    void bfs(int u)
+    {
+        map<int, bool> visited;
+        queue<int> q;
+        q.push(u);
+        while (!q.empty())
+        {
+            int front_element = q.front();
+            q.pop();
+            if (!visited[front_element])
+            {
+                cout << front_element << " -> ";
+                visited[front_element] = true;
+            }
+            for (auto a : (adjList[front_element]))
+            {
+                if (!visited[a.first])
+                    q.push(a.first);
+            }
+        }
+        }
 };
 int main()
 {
@@ -46,6 +68,7 @@ int main()
     g.addEdge(3, 4, 9, 0);
     g.addEdge(5, 4, 10, 0);
     g.addEdge(7, 6, 1, 0);
+    g.bfs(0);
     g.print_adj();
     return 0;
 }
