@@ -3,14 +3,19 @@ using namespace std;
 
 int maximumProfit(int prices[], int n)
 {
-    if (n <= 0)
-        return 0;
-    int max_val = INT_MIN;
-    for (int i = 0; i < n; i++)
+    int val[n + 1];
+    val[0] = 0;
+    int i, j, max_val;
+    for (i = 1; i <= n; i++)
     {
-        max_val = max(max_val, prices[i] + maximumProfit(prices, n - i - 1));
+        max_val = INT_MIN;
+        for (j = 0; j < i; j++)
+        {
+            max_val = max(max_val, prices[j] + val[i - j - 1]);
+        }
+        val[i] = max_val;
     }
-    return max_val;
+    return val[n];
 }
 
 int main()
