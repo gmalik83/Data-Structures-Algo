@@ -5,21 +5,21 @@ int main()
 {
     string a, b;
     cin >> a >> b;
-    transform(a.begin(), a.end(), a.begin(), ::tolower);
-    transform(b.begin(), b.end(), b.begin(), ::tolower);
     int l1 = a.length();
-    int total1 = 0, total2 = 0;
     for (int i = 0; i < l1; i++)
     {
-        total1 += a[i];
-        total2 += b[i];
+        if (a[i] < 92)
+            a[i] += 32;
+        if (b[i] < 92)
+            b[i] += 32;
     }
-    if (total1 == total2)
-        cout << 0 << endl;
-    else if (total1 < total2)
-        cout << -1 << endl;
+
+    if (a < b)
+        cout << -1;
+    else if (a > b)
+        cout << 1;
     else
-        cout << 1 << endl;
+        cout << 0;
 
     return 0;
 }
