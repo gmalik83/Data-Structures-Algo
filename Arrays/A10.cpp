@@ -53,6 +53,27 @@ void printArray(int arr[], int n)
     for (int i = 0; i < n; i++)
         cout << arr[i] << " ";
 }
+// Insertion Sort with Order Preserved of Elements
+void RearrangePosNeg(int arr[], int n)
+{
+    int key, j;
+    for (int i = 1; i < n; i++)
+    {
+        key = arr[i];
+        // If Element is Positive , Skip this loop
+        if (key > 0)
+            continue;
+        // If Negative , Shift one position , arr[0,...,i-1]
+        j = i - 1;
+        while (j >= 0 && arr[j] > 0)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        // Put Negative Element at its position
+        arr[j + 1] = key;
+    }
+}
 int main()
 {
     /*   Use Partition Process for QuickSort to sort
@@ -63,7 +84,8 @@ int main()
     int n = sizeof(arr) / sizeof(arr[0]);
     // rearrange(arr, n);
     // printArray(arr, n);
-    twoPointer(arr, n);
+    // twoPointer(arr, n);
+    RearrangePosNeg(arr, n);
     printArray(arr, n);
 
     return 0;
