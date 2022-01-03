@@ -18,12 +18,28 @@ int getPair(int arr[], int n, int sum)
 
     return count;
 }
+// Map Based One time traversal Method
+int getPairMap(int arr[], int n, int sum)
+{
+    // Create a Unordered Map
+    unordered_map<int, int> m;
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (m.find(sum - arr[i]) != m.end())
+        {
+            count += m[sum - arr[i]];
+        }
+        m[arr[i]]++;
+    }
+    return count;
+}
 int main()
 {
     int arr[] = {1, 5, 7, -1, 5};
     int n = 5;
     int sum = 6;
-    cout << "Count of pairs with sum " << sum << " is:" << getPair(arr, n, sum) << endl;
+    cout << "Count of pairs with sum " << sum << " is:" << getPairMap(arr, n, sum) << endl;
 
     return 0;
 }
