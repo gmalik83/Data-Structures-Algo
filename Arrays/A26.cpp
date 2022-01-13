@@ -10,39 +10,45 @@ using namespace std;
 */
 void subarraySum(int arr[], int n, int sum)
 {
-    // Time Complexity : O(n) Space Complexity : O(n) as hashmap takes space
-    // Create an empty map
-    unordered_map<int, int> map;
-    // Maintain Sum of Element so far
-    int curr_sum = 0;
-
-    // Loop for every element
+    int minEle = INT_MAX;
+    // Find Minimum Element in array
     for (int i = 0; i < n; i++)
+        minEle = min(arr[i], minEle);
+    // Initialize current sum
+    int curr_sum = arr[0] + abs(minEle), start = 0, i;
+    int targetSum = sum;
+    // Add one by one and if it exceeds remove first one
+    for (int i = 1; i <= n; i++)
     {
-        curr_sum = curr_sum + arr[i];
-        // If current sum is equal to target sum
-        // Then Subarray is found
-        if (curr_sum == sum)
+        // If curr_sum exceeds the sum,
+        // then remove the starting elements
+        while (curr_sum - (i - start) * abs(minEle) > targetSum && start < i)
         {
-            cout << "Sum found between indexes " << 0 << " to " << i << endl;
+            curr_sum = curr_sum - arr[start] - abs(minEle);
+            start++;
+        }
+
+        // If curr_sum becomes equal to sum, then return true
+        if (curr_sum - (i - start) * abs(minEle) == targetSum)
+        {
+            cout << "Sum found between indexes " << start << " and " << i - 1;
             return;
         }
-        // If curr_sum- sum exist then found subarray with target sum
-        if (map.find(curr_sum - sum) != map.end())
+
+        // Add this element to curr_sum
+        if (i < n)
         {
-            cout << "Sum found between indexes " << map[curr_sum - sum] + 1 << " to " << i << endl;
-            return;
+            curr_sum = curr_sum + arr[i] + abs(minEle);
         }
-        map[curr_sum] = i;
     }
-    // If we reach here , then no subarray exists
-    cout << "No subarray with " << sum << " sum exists" << endl;
+    // Reached end of array
+    cout << "No subarray found " << endl;
 }
 int main()
 {
     int arr[] = {15, 2, 4, 8, 9, 5, 10, 23};
     int n = 8;
-    int sum = 116;
+    int sum = 6;
     subarraySum(arr, n, sum);
 
     return 0;
