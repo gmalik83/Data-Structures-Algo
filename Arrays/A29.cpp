@@ -3,35 +3,32 @@ using namespace std;
 // Longest Consecutive Elements
 /*
     Problem : Increasing Order longest length
-    1. Naive Method : Sort array and find length of consecutive
+    1. Naive Method : Sort array and find length of consecutive O(nlogn) and O(1)
+    2. Use Hash . Push all elements in hash and then check for starting point and length of the subsequence 
+
 
 */
 // Return Length of longest contiguos subsequence
 int findLongestSubsequence(int arr[], int n)
 {
-    int ans = 0, count = 0;
-    // sort the array
-    sort(arr, arr + n);
-
-    vector<int> v;
-    v.push_back(arr[0]);
-    // Insert repeated element only once
-    for (int i = 1; i < n; i++)
+    unordered_set<int> S;
+    int ans = 0;
+    // Hash all array elements
+    for (int i = 0; i < n; i++)
+        S.insert(arr[i]);
+    // Check all possible length from start and then update optimal length
+    for (int i = 0; i < n; i++)
     {
-        if (arr[i] != arr[i - 1])
-            v.push_back(arr[i]);
-    }
-    // Find Maximum length by traversing the array
-    for (int i = 0; i < v.size(); i++)
-    {
-        // Check for increasing order
-        if (i > 0 && v[i] == v[i - 1] + 1)
-            count++;
-        else
-            // reset the count
-            count = 1;
-        // Update answer
-        ans = max(ans, count);
+        // If current element is the starting point of sequence
+        if (S.find(arr[i] - 1) == S.end())
+        {
+            // Check for next elements
+            int j = arr[i];
+            while (S.find(j) != S.end())
+                j++;
+            // Update optimal length if this length is more
+            ans = max(ans, j - arr[i]);
+        }
     }
     return ans;
 }
