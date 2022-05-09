@@ -1,25 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
+// DFS of Graph
 
+// Graph Class
 class Graph
 {
 public:
-    map<int, list<int>> adj;
     map<int, bool> visited;
+    map<int, list<int>> adj;
+
+    // Function to Add an Edge to Graph
     void addEdge(int v, int w);
+    // DFS Traversal of Vertices Reachable from V
     void DFS(int v);
 };
 void Graph::addEdge(int v, int w)
 {
-    adj[v].push_back(w); // Add w to v’s list.
+    adj[v].push_back(w);
 }
 void Graph::DFS(int v)
 {
-    // Mark Current as Visited and print
+    // Mark Current Node as Visited and Print It
     visited[v] = true;
     cout << v << " ";
-    list<int>::iterator i;
 
+    // Recur for all Vertices Adjacent to this Vertex
+    list<int>::iterator i;
     for (i = adj[v].begin(); i != adj[v].end(); i++)
     {
         if (!visited[*i])
@@ -28,6 +34,7 @@ void Graph::DFS(int v)
         }
     }
 }
+
 int main()
 {
     Graph g;
@@ -37,7 +44,10 @@ int main()
     g.addEdge(2, 0);
     g.addEdge(2, 3);
     g.addEdge(3, 3);
-    cout << "Performing DFS of Graph:\n";
+
+    cout << "Following is Depth First Traversal"
+            " (starting from vertex 2) \n";
     g.DFS(2);
+
     return 0;
 }
