@@ -20,7 +20,7 @@ int findPivot(int arr[], int low, int high)
     if (high < low)
         return -1;
     if (high == low)
-        return low;
+        return low;  
 
     int mid = (low + high) / 2;
     if (mid < high && arr[mid] > arr[mid + 1])
